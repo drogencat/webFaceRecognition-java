@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="userDao">
+	<!-- 查询管理员 -->
+	<select id="getUsersList" parameterType="UserInfo" resultType="UserInfo">
+		select * from `userInfo` where status = 0
+	</select>
+	<!-- 查询登录用户是否存在 -->
+	<select id="getUserAccount" parameterType="String" resultType="UserInfo">
+		select * from userInfo where userName = #{userName}
+	</select>
+	<!-- 添加用户 -->
+	<insert id="addUser" parameterType="UserInfo" useGeneratedKeys="true" keyProperty="userID">
+		insert into userInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userID != null" >
+        userID,
+      </if>
+      <if test="userName != null" >
+        userName,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="nickName != null" >
+        nickName,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+      <if test="updateDate != null" >
+        updateDate,
+      </if>
+      <if test="faceIdentity != null" >
+        faceIdentity,
+      </if>
+      <if test="recordDate != null" >
+        recordDate,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userID != null" >
+        #{userID,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=INTEGER},
+      </if>
+      <if test="faceIdentity != null" >
+        #{faceIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="recordDate != null" >
+        #{recordDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+ <!-- 查询userName -->
+ 	<select id="getUserByUserName" parameterType="String" resultType="UserInfo">
+ 			select count(*) from userInfo where userName = #{UserName}
+ 	</select>
+<!-- 查询下一个自增值 -->
+	<select id ="getNextValue" resultType="Integer">
+		select max(userID)+1 from userInfo
+	</select>
+</mapper> 
